@@ -7,22 +7,30 @@
 //
 
 #import "OCREngine.h"
+#include <opencv2/imgproc/imgproc.hpp>
 #import "image_processor.hpp"
 
 @implementation OCREngine
 
 - (void)processBuffer :(CMSampleBufferRef)buffer {
     
-    CVImageBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(buffer);
-    CVPixelBufferLockBaseAddress(pixelBuffer, 0);
+    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(buffer);
+    CVPixelBufferLockBaseAddress(imageBuffer, 0);
     
-    //Processing here
-    int bufferWidth = (int)CVPixelBufferGetWidth(pixelBuffer);
-    int bufferHeight = (int)CVPixelBufferGetHeight(pixelBuffer);
-    unsigned char *pixel = (unsigned char *)CVPixelBufferGetBaseAddress(pixelBuffer);
+    unsigned char *buf = (unsigned char *)CVPixelBufferGetBaseAddress(imageBuffer);
     
     Mat matrix;
     
-    ImageProcessor::Buffer2Mat(matrix, pixel, bufferHeight, bufferWidth);
+    ImageProcessor::Buffer2Mat(matrix, buf, (int)CVPixelBufferGetHeight(imageBuffer), (int)CVPixelBufferGetWidth(imageBuffer));
+    
+    CVPixelBufferUnlockBaseAddress(imageBuffer, kCVPixelBufferLock_ReadOnly);
+    
+    rectangle(matrix, cv::Rect(0, 0, 100, 100), Scalar(255, 255, 0), 10);
+    
+    CVPixelBufferLockBaseAddress(imageBuffer, 0);
+    
+    ImageProcessor::Mat2Buffer(matrix, buf);
+    
+    CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
 }
 @end

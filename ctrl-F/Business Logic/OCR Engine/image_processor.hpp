@@ -11,6 +11,7 @@
 
 #include <opencv2/core.hpp>
 #include <stdio.h>
+#include <iostream>
 
 using namespace std;
 using namespace cv;
@@ -20,7 +21,7 @@ class ImageProcessor {
     
 public:
     
-    static void Mat2Buffer(Mat &matrix, uchar *buffer);
-    static void Buffer2Mat(Mat &matrix, uchar *buffer, const int &height, const int &width);
+    static void Mat2Buffer(Mat &matrix, unsigned char *buffer);
+    static void Buffer2Mat(Mat &matrix, unsigned char *buffer, const int &height, const int &width);
 };
 #endif

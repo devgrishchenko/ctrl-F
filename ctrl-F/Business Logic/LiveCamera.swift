@@ -14,11 +14,12 @@ public class LiveCamera: NSObject {
     
     private var session: AVCaptureSession!
     private var layer: AVSampleBufferDisplayLayer!
+    private var ocrEngine: OCREngine!
     
     
     public init(with layerView: UIView) {
         super.init()
-        
+        self.ocrEngine = OCREngine()
         self.configSession()
         
         self.layer = AVSampleBufferDisplayLayer()
@@ -75,7 +76,7 @@ extension LiveCamera: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureMet
     
     
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        
+        self.ocrEngine.processBuffer(sampleBuffer)
         self.layer.enqueue(sampleBuffer)
     }
 }
