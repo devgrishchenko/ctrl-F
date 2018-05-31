@@ -11,15 +11,13 @@ import UIKit
 
 
 public class LiveCamera: NSObject {
-    
-    var imageView: UIImageView!
-    
+
     private var session: AVCaptureSession!
     private var layer: AVSampleBufferDisplayLayer!
     private var ocrEngine: OCREngine!
     
     
-    public init(with layerView: UIView, img: UIImageView) {
+    public init(with layerView: UIView) {
         super.init()
         self.ocrEngine = OCREngine()
         self.configSession()
@@ -27,8 +25,6 @@ public class LiveCamera: NSObject {
         self.layer = AVSampleBufferDisplayLayer()
         self.layer.frame = layerView.bounds
         layerView.layer.addSublayer(self.layer)
-        
-        imageView = img
     }
     
     
@@ -81,10 +77,7 @@ extension LiveCamera: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureMet
     
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
-        DispatchQueue.main.async {
-            
-            self.imageView.image = self.ocrEngine.processBuffer(sampleBuffer)
-        }
-//        self.layer.enqueue(sampleBuffer)
+        self.ocrEngine.processBuffer(sampleBuffer)
+        self.layer.enqueue(sampleBuffer)
     }
 }

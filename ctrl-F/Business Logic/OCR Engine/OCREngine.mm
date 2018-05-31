@@ -12,7 +12,7 @@
 
 @implementation OCREngine
 
-- (UIImage*)processBuffer :(CMSampleBufferRef)sampleBuffer {
+- (void)processBuffer :(CMSampleBufferRef)sampleBuffer {
     
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     CVPixelBufferLockBaseAddress(imageBuffer, 0);
@@ -30,45 +30,10 @@
     
     rectangle(matrix, cv::Rect(100, 300, 100, 100), Scalar(255, 255, 0), 10);
     
-    return [OCREngine convertMatToImage:matrix];
-//    CVPixelBufferLockBaseAddress(imageBuffer, 0);
-//
-//    ImageProcessor::Mat2Buffer(matrix, buffer);
-//
-//    CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
-}
+    CVPixelBufferLockBaseAddress(imageBuffer, 0);
 
-// MARK: - Converts Mat to UIImage
+    ImageProcessor::Mat2Buffer(matrix, buffer);
 
-+ (UIImage *)convertMatToImage :(Mat)mat {
-    
-    NSData *data = [NSData dataWithBytes:mat.data length:mat.elemSize() * mat.total()];
-    CGColorSpaceRef colorSpace;
-    
-    (mat.elemSize() == 1) ? colorSpace = CGColorSpaceCreateDeviceGray() : colorSpace = CGColorSpaceCreateDeviceRGB();
-    
-    CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
-    
-    CGImageRef imageRef = CGImageCreate(mat.cols,
-                                        mat.rows,
-                                        8,
-                                        8 * mat.elemSize(),
-                                        mat.step[0],
-                                        colorSpace,
-                                        kCGImageAlphaNone|
-                                        kCGBitmapByteOrderDefault,
-                                        provider,
-                                        NULL,
-                                        false,
-                                        kCGRenderingIntentDefault);
-    
-    UIImage *image = [UIImage imageWithCGImage:imageRef];
-    
-    //: Clean up
-    CGImageRelease(imageRef);
-    CGDataProviderRelease(provider);
-    CGColorSpaceRelease(colorSpace);
-    
-    return image;
+    CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
 }
 @end
