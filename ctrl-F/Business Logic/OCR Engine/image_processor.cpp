@@ -15,7 +15,7 @@ void ImageProcessor::Mat2Buffer(Mat &matrix, unsigned char *buffer) {
 }
 
 
-void ImageProcessor::Buffer2Mat(Mat &matrix, unsigned char *buffer, const int &height, const int &width) {
+void ImageProcessor::Buffer2Mat(Mat &matrix, unsigned char *buffer, const int bytesPerRow, const int &height, const int &width) {
     
-    matrix = Mat(height, width, CV_8UC4, buffer);
+    matrix = Mat(height, width, CV_8UC4, buffer, bytesPerRow);
 }
