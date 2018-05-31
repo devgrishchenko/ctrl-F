@@ -28,12 +28,14 @@
     
     CVPixelBufferUnlockBaseAddress(imageBuffer, kCVPixelBufferLock_ReadOnly);
     
-    rectangle(matrix, cv::Rect(100, 300, 100, 100), Scalar(255, 255, 0), 10);
+    //rectangle(matrix, cv::Rect(100, 300, 100, 100), Scalar(255, 255, 0), 10);
     
     CVPixelBufferLockBaseAddress(imageBuffer, 0);
 
     ImageProcessor::Mat2Buffer(matrix, buffer);
 
     CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
+    
+    matrix.release();
 }
 @end

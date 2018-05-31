@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		95A73E9620C04F6B0094F1E6 /* character_contour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 95A73E9420C04F6B0094F1E6 /* character_contour.cpp */; };
 		95CB1FE020BC79D500DF58DD /* LiveCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CB1FDF20BC79D500DF58DD /* LiveCamera.swift */; };
 		95CB554C20BCED450099DD3D /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95CB554B20BCED450099DD3D /* opencv2.framework */; };
 		95CB555420BD97B20099DD3D /* image_processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 95CB555220BD97B20099DD3D /* image_processor.cpp */; };
@@ -19,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		95A73E9420C04F6B0094F1E6 /* character_contour.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = character_contour.cpp; sourceTree = "<group>"; };
+		95A73E9520C04F6B0094F1E6 /* character_contour.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = character_contour.hpp; sourceTree = "<group>"; };
 		95CB1FDF20BC79D500DF58DD /* LiveCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveCamera.swift; sourceTree = "<group>"; };
 		95CB554B20BCED450099DD3D /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		95CB554D20BCEDBF0099DD3D /* ctrl-F-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ctrl-F-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -79,6 +82,8 @@
 			children = (
 				95CB555220BD97B20099DD3D /* image_processor.cpp */,
 				95CB555320BD97B20099DD3D /* image_processor.hpp */,
+				95A73E9420C04F6B0094F1E6 /* character_contour.cpp */,
+				95A73E9520C04F6B0094F1E6 /* character_contour.hpp */,
 				95CF77A520BDBE62008E41F1 /* OCREngine.h */,
 				95CF77A620BDBE62008E41F1 /* OCREngine.mm */,
 			);
@@ -194,6 +199,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95A73E9620C04F6B0094F1E6 /* character_contour.cpp in Sources */,
 				95CB1FE020BC79D500DF58DD /* LiveCamera.swift in Sources */,
 				95E8822120BC5F880024C147 /* ViewController.swift in Sources */,
 				95E8823120BC5FFF0024C147 /* Extensions.swift in Sources */,
