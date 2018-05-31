@@ -19,3 +19,13 @@ void ImageProcessor::Buffer2Mat(Mat &matrix, unsigned char *buffer, const int &b
     
     matrix = Mat(height, width, CV_8UC4, buffer, bytesPerRow);
 }
+
+
+void ImageProcessor::ProcessMat(Mat &matrix, Mat &processedMatrix) {
+    
+    //: Converts image to the grayscale
+    cvtColor(matrix, processedMatrix, CV_BGR2GRAY);
+    
+    //: Convert grayscale to threshold
+    threshold(processedMatrix, processedMatrix, 150, 255, THRESH_BINARY_INV);
+}

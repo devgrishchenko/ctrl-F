@@ -9,7 +9,7 @@
 #ifndef character_contour_hpp
 #define character_contour_hpp
 
-#include <opencv2/core.hpp>
+#include <opencv2/core/core.hpp>
 
 
 using namespace std;

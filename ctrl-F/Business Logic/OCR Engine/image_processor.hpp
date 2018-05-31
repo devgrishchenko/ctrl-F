@@ -9,7 +9,9 @@
 #ifndef image_processor_hpp
 #define image_processor_hpp
 
-#include <opencv2/core.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include <stdio.h>
 #include <iostream>
 
@@ -21,6 +23,7 @@ class ImageProcessor {
     
 public:
     
+    static void ProcessMat(Mat &matrix, Mat &processedMatrix);
     static void Mat2Buffer(Mat &matrix, unsigned char *buffer);
     static void Buffer2Mat(Mat &matrix, unsigned char *buffer, const int &bytesPerRow, const int &height, const int &width);
 };

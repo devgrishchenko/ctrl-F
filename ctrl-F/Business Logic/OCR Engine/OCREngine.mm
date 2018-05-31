@@ -20,6 +20,7 @@
     unsigned char *buffer = (unsigned char *)CVPixelBufferGetBaseAddress(imageBuffer);
     
     Mat matrix;
+    Mat processedMatrix;
     
     ImageProcessor::Buffer2Mat(matrix, buffer,
                                (int)CVPixelBufferGetBytesPerRow(imageBuffer),
@@ -28,14 +29,16 @@
     
     CVPixelBufferUnlockBaseAddress(imageBuffer, kCVPixelBufferLock_ReadOnly);
     
-    //rectangle(matrix, cv::Rect(100, 300, 100, 100), Scalar(255, 255, 0), 10);
+    //: Recognition
+    ImageProcessor::ProcessMat(matrix, processedMatrix);
     
     CVPixelBufferLockBaseAddress(imageBuffer, 0);
-
+    
     ImageProcessor::Mat2Buffer(matrix, buffer);
 
     CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
     
     matrix.release();
+    processedMatrix.release();
 }
 @end
