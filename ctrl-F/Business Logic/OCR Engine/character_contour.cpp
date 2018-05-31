@@ -49,3 +49,44 @@ bool CharacterContour::SortXaxis(CharacterContour &left, CharacterContour &right
     
     return(left.GetCharRect().x < right.GetCharRect().x);
 }
+
+
+vector<vector<CharacterContour>> CharacterContour::SortCharacterContours(vector<CharacterContour> &characterContours) {
+    
+    // Sorts contours from top to bottom
+    sort(characterContours.begin(), characterContours.end(), CharacterContour::SortYaxis);
+    
+    vector<vector<CharacterContour>> matrix;
+    vector<CharacterContour> single;
+    
+    //: Sets the Y coordinate of the first line
+    int temp = characterContours[0].GetCharRect().y;
+    
+    for (int i = 0; i < characterContours.size(); i++) {
+        
+        //: Determines if the next character located on the next line
+        if (characterContours[i].GetCharRect().y > temp + 10) {
+            
+            //: Sorts contours by X coordinate
+            sort(single.begin(), single.end(), CharacterContour::SortXaxis);
+            
+            matrix.push_back(single);
+            
+            //: Clean up for the next line
+            single.clear();
+            
+            //: Sets the Y coordinate of the next line
+            temp = characterContours[i].GetCharRect().y;
+        }
+        
+        single.push_back(characterContours[i]);
+    }
+    
+    sort(single.begin(), single.end(), CharacterContour::SortXaxis);
+    matrix.push_back(single);
+    
+    //: Clean up
+    single.clear();
+    
+    return matrix;
+}

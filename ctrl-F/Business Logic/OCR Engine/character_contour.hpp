@@ -29,6 +29,7 @@ public:
     CharacterContour(const vector<Point> &charContour, const Rect &charRect, const float &charArea);
     static bool SortYaxis(CharacterContour &left, CharacterContour &right);
     static bool SortXaxis(CharacterContour &left, CharacterContour &right);
+    static vector<vector<CharacterContour>> SortCharacterContours(vector<CharacterContour> &characterContours);
     vector<Point> GetCharContour();
     Rect GetCharRect();
     float GetCharArea();
