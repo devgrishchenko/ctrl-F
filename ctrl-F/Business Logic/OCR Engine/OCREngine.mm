@@ -7,10 +7,23 @@
 //
 
 #import "OCREngine.h"
-#include <opencv2/imgproc/imgproc.hpp>
-#import "image_processor.hpp"
+#import "character_recognition.hpp"
 
 @implementation OCREngine
+
+CharacterRecognition *_characterRecognition;
+
+
+- (instancetype)init {
+    
+    if (self = [super init]) {
+        
+        _characterRecognition = new CharacterRecognition();
+    }
+    
+    return self;
+}
+
 
 - (void)processBuffer :(CMSampleBufferRef)sampleBuffer {
     
@@ -20,7 +33,6 @@
     unsigned char *buffer = (unsigned char *)CVPixelBufferGetBaseAddress(imageBuffer);
     
     Mat matrix;
-    Mat processedMatrix;
     
     ImageProcessor::Buffer2Mat(matrix, buffer,
                                (int)CVPixelBufferGetBytesPerRow(imageBuffer),
@@ -30,7 +42,7 @@
     CVPixelBufferUnlockBaseAddress(imageBuffer, kCVPixelBufferLock_ReadOnly);
     
     //: Recognition
-    ImageProcessor::ProcessMat(matrix, processedMatrix);
+    _characterRecognition->DetectContours(matrix);
     
     CVPixelBufferLockBaseAddress(imageBuffer, 0);
     
@@ -39,6 +51,5 @@
     CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
     
     matrix.release();
-    processedMatrix.release();
 }
 @end

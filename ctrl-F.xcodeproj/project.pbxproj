@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		951D2E0120C09E0200D419E9 /* character_recognition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 951D2DFF20C09E0200D419E9 /* character_recognition.cpp */; };
 		95A73E9620C04F6B0094F1E6 /* character_contour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 95A73E9420C04F6B0094F1E6 /* character_contour.cpp */; };
 		95CB1FE020BC79D500DF58DD /* LiveCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CB1FDF20BC79D500DF58DD /* LiveCamera.swift */; };
 		95CB554C20BCED450099DD3D /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95CB554B20BCED450099DD3D /* opencv2.framework */; };
@@ -20,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		951D2DFF20C09E0200D419E9 /* character_recognition.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = character_recognition.cpp; sourceTree = "<group>"; };
+		951D2E0020C09E0200D419E9 /* character_recognition.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = character_recognition.hpp; sourceTree = "<group>"; };
 		95A73E9420C04F6B0094F1E6 /* character_contour.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = character_contour.cpp; sourceTree = "<group>"; };
 		95A73E9520C04F6B0094F1E6 /* character_contour.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = character_contour.hpp; sourceTree = "<group>"; };
 		95CB1FDF20BC79D500DF58DD /* LiveCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveCamera.swift; sourceTree = "<group>"; };
@@ -80,6 +83,8 @@
 		95CB555120BD97610099DD3D /* OCR Engine */ = {
 			isa = PBXGroup;
 			children = (
+				951D2DFF20C09E0200D419E9 /* character_recognition.cpp */,
+				951D2E0020C09E0200D419E9 /* character_recognition.hpp */,
 				95CB555220BD97B20099DD3D /* image_processor.cpp */,
 				95CB555320BD97B20099DD3D /* image_processor.hpp */,
 				95A73E9420C04F6B0094F1E6 /* character_contour.cpp */,
@@ -206,6 +211,7 @@
 				95E8821F20BC5F880024C147 /* AppDelegate.swift in Sources */,
 				95CF77A720BDBE62008E41F1 /* OCREngine.mm in Sources */,
 				95CB555420BD97B20099DD3D /* image_processor.cpp in Sources */,
+				951D2E0120C09E0200D419E9 /* character_recognition.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
