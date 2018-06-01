@@ -10,6 +10,10 @@
 #define character_contour_hpp
 
 #include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+
+#define MIN_CONTOUR_AREA 10
+#define MAX_CONTOUR_AREA 150
 
 
 using namespace std;
@@ -26,12 +30,14 @@ private:
     
 public:
     
-    CharacterContour(const vector<Point> &charContour, const Rect &charRect, const float &charArea);
-    static bool SortYaxis(CharacterContour &left, CharacterContour &right);
-    static bool SortXaxis(CharacterContour &left, CharacterContour &right);
-    static vector<vector<CharacterContour>> SortCharacterContours(vector<CharacterContour> &characterContours);
+    CharacterContour(const vector<Point> &charContour);
     vector<Point> GetCharContour();
     Rect GetCharRect();
     float GetCharArea();
+    
+    static bool SortYaxis(CharacterContour &left, CharacterContour &right);
+    static bool SortXaxis(CharacterContour &left, CharacterContour &right);
+    static void SortCharacterContours(vector<CharacterContour> &characterContours, vector<vector<CharacterContour>> text);
+    static void FilterCharacterContours(vector<vector<Point>> &characterContours, vector<CharacterContour> validCharacterContours);
 };
 #endif

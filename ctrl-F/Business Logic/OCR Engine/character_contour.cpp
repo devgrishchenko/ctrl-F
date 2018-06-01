@@ -9,11 +9,11 @@
 #include "character_contour.hpp"
 
 
-CharacterContour::CharacterContour(const vector<Point> &charContour, const Rect &charRect, const float &charArea) {
+CharacterContour::CharacterContour(const vector<Point> &charContour) {
     
     _charContour = charContour;
-    _charRect = charRect;
-    _charArea = charArea;
+    _charRect = boundingRect(charContour);
+    _charArea = contourArea(charContour);
 }
 
 
@@ -37,7 +37,7 @@ float CharacterContour::GetCharArea() {
 }
 
 
-#pragma mark Sorting Character Contours
+#pragma mark Sorting & Filtering Character Contours
 
 bool CharacterContour::SortYaxis(CharacterContour &left, CharacterContour &right) {
     
@@ -51,13 +51,12 @@ bool CharacterContour::SortXaxis(CharacterContour &left, CharacterContour &right
 }
 
 
-vector<vector<CharacterContour>> CharacterContour::SortCharacterContours(vector<CharacterContour> &characterContours) {
+void CharacterContour::SortCharacterContours(vector<CharacterContour> &characterContours, vector<vector<CharacterContour>> text) {
     
     // Sorts contours from top to bottom
     sort(characterContours.begin(), characterContours.end(), CharacterContour::SortYaxis);
     
-    vector<vector<CharacterContour>> matrix;
-    vector<CharacterContour> single;
+    vector<CharacterContour> line;
     
     //: Sets the Y coordinate of the first line
     int temp = characterContours[0].GetCharRect().y;
@@ -68,25 +67,35 @@ vector<vector<CharacterContour>> CharacterContour::SortCharacterContours(vector<
         if (characterContours[i].GetCharRect().y > temp + 10) {
             
             //: Sorts contours by X coordinate
-            sort(single.begin(), single.end(), CharacterContour::SortXaxis);
+            sort(line.begin(), line.end(), CharacterContour::SortXaxis);
             
-            matrix.push_back(single);
+            text.push_back(line);
             
             //: Clean up for the next line
-            single.clear();
+            line.clear();
             
             //: Sets the Y coordinate of the next line
             temp = characterContours[i].GetCharRect().y;
         }
         
-        single.push_back(characterContours[i]);
+        line.push_back(characterContours[i]);
     }
     
-    sort(single.begin(), single.end(), CharacterContour::SortXaxis);
-    matrix.push_back(single);
+    sort(line.begin(), line.end(), CharacterContour::SortXaxis);
+    text.push_back(line);
     
     //: Clean up
-    single.clear();
+    line.clear();
+}
+
+
+void CharacterContour::FilterCharacterContours(vector<vector<Point>> &characterContours, vector<CharacterContour> validCharacterContours) {
     
-    return matrix;
+    for (unsigned int i = 0; i < characterContours.size(); i++) {
+        
+        if (contourArea(characterContours[i]) > MIN_CONTOUR_AREA && contourArea(characterContours[i]) < MAX_CONTOUR_AREA) {
+            
+            validCharacterContours.push_back(CharacterContour(characterContours[i]));
+        }
+    }
 }
