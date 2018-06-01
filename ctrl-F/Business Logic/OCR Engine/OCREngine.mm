@@ -42,7 +42,7 @@ CharacterRecognition *_characterRecognition;
     CVPixelBufferUnlockBaseAddress(imageBuffer, kCVPixelBufferLock_ReadOnly);
     
     //: Recognition
-    _characterRecognition->DetectContours(matrix);
+    _characterRecognition->Pipeline(matrix);
     
     CVPixelBufferLockBaseAddress(imageBuffer, 0);
     

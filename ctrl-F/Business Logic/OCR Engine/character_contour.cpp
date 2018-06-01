@@ -51,7 +51,7 @@ bool CharacterContour::SortXaxis(CharacterContour &left, CharacterContour &right
 }
 
 
-void CharacterContour::SortCharacterContours(vector<CharacterContour> &characterContours, vector<vector<CharacterContour>> text) {
+void CharacterContour::SortCharacterContours(vector<CharacterContour> &characterContours, vector<vector<CharacterContour>> &text) {
     
     // Sorts contours from top to bottom
     sort(characterContours.begin(), characterContours.end(), CharacterContour::SortYaxis);
@@ -89,12 +89,12 @@ void CharacterContour::SortCharacterContours(vector<CharacterContour> &character
 }
 
 
-void CharacterContour::FilterCharacterContours(vector<vector<Point>> &characterContours, vector<CharacterContour> validCharacterContours) {
+void CharacterContour::FilterCharacterContours(vector<vector<Point>> &characterContours, vector<CharacterContour> &validCharacterContours) {
     
     for (unsigned int i = 0; i < characterContours.size(); i++) {
         
         if (contourArea(characterContours[i]) > MIN_CONTOUR_AREA && contourArea(characterContours[i]) < MAX_CONTOUR_AREA) {
-            
+        
             validCharacterContours.push_back(CharacterContour(characterContours[i]));
         }
     }

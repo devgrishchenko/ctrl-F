@@ -9,18 +9,25 @@
 #include "character_recognition.hpp"
 
 
-void CharacterRecognition::DetectContours(Mat &matrix) {
-    
-    vector<vector<Point>> charsContours;
-    Mat processedMatrix;
-    
-    ImageProcessor::ProcessMat(matrix, processedMatrix);
+void CharacterRecognition::DetectContours(Mat &processedMatrix, vector<vector<Point>> &characterContours) {
     
     //: Finds contours on the image and returns vector
-    findContours(processedMatrix.clone(), charsContours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+    findContours(processedMatrix.clone(), characterContours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+}
+
+
+void CharacterRecognition::Pipeline(Mat &matix) {
     
-    for (unsigned int i = 0; i < charsContours.size(); i++) {
+    Mat processedMatrix;
+    vector<vector<Point>> characterContours;
+    vector<CharacterContour> validCharacterContours;
+    
+    ImageProcessor::ProcessMat(matix, processedMatrix);
+    this->DetectContours(processedMatrix, characterContours);
+    CharacterContour::FilterCharacterContours(characterContours, validCharacterContours);
+    
+    for (unsigned i = 0; i < validCharacterContours.size(); i++) {
         
-        rectangle(matrix, boundingRect(charsContours[i]), Scalar(255, 255, 0), 2);
+        rectangle(matix, validCharacterContours[i].GetCharRect(), Scalar(255, 255, 0), 1);
     }
 }

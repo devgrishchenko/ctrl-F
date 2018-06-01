@@ -10,7 +10,8 @@
 #define character_recognition_hpp
 
 #include <opencv2/core/core.hpp>
-#import "image_processor.hpp"
+#include "image_processor.hpp"
+#include "character_contour.hpp"
 #include <stdio.h>
 
 using namespace std;
@@ -21,6 +22,7 @@ class CharacterRecognition {
   
 public:
     
-    void DetectContours(Mat &matrix);
+    void DetectContours(Mat &processedMatrix, vector<vector<cv::Point>> &characterContours);
+    void Pipeline(Mat &matix);
 };
 #endif
