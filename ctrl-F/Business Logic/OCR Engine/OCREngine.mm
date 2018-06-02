@@ -18,10 +18,16 @@ CharacterRecognition *_characterRecognition;
     
     if (self = [super init]) {
         
-        _characterRecognition = new CharacterRecognition();
+        _characterRecognition = new CharacterRecognition([self getModelPath]);
     }
     
     return self;
+}
+
+
+- (string)getModelPath {
+    
+    return [[[NSBundle mainBundle] pathForResource:@"knn-ocr" ofType:@"model"] UTF8String];
 }
 
 

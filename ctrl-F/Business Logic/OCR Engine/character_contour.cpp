@@ -51,7 +51,7 @@ bool CharacterContour::SortXaxis(CharacterContour &left, CharacterContour &right
 }
 
 
-void CharacterContour::SortCharacterContours(vector<CharacterContour> &characterContours, vector<vector<CharacterContour>> &text) {
+void CharacterContour::SortCharacterContours(vector<CharacterContour> &characterContours, vector<vector<CharacterContour>> &textMatrix) {
     
     // Sorts contours from top to bottom
     sort(characterContours.begin(), characterContours.end(), CharacterContour::SortYaxis);
@@ -69,7 +69,7 @@ void CharacterContour::SortCharacterContours(vector<CharacterContour> &character
             //: Sorts contours by X coordinate
             sort(line.begin(), line.end(), CharacterContour::SortXaxis);
             
-            text.push_back(line);
+            textMatrix.push_back(line);
             
             //: Clean up for the next line
             line.clear();
@@ -82,7 +82,7 @@ void CharacterContour::SortCharacterContours(vector<CharacterContour> &character
     }
     
     sort(line.begin(), line.end(), CharacterContour::SortXaxis);
-    text.push_back(line);
+    textMatrix.push_back(line);
     
     //: Clean up
     line.clear();

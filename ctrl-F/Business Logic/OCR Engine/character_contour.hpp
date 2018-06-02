@@ -15,7 +15,6 @@
 #define MIN_CONTOUR_AREA 5
 #define MAX_CONTOUR_AREA 250
 
-
 using namespace std;
 using namespace cv;
 
@@ -37,7 +36,7 @@ public:
     
     static bool SortYaxis(CharacterContour &left, CharacterContour &right);
     static bool SortXaxis(CharacterContour &left, CharacterContour &right);
-    static void SortCharacterContours(vector<CharacterContour> &characterContours, vector<vector<CharacterContour>> &text);
+    static void SortCharacterContours(vector<CharacterContour> &characterContours, vector<vector<CharacterContour>> &textMatrix);
     static void FilterCharacterContours(vector<vector<cv::Point>> &characterContours, vector<CharacterContour> &validCharacterContours);
 };
 #endif
