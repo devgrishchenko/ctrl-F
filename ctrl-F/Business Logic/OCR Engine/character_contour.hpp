@@ -12,7 +12,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
-#define MIN_CONTOUR_AREA 5
+#define MIN_CONTOUR_AREA 10
 #define MAX_CONTOUR_AREA 250
 
 using namespace std;

@@ -39,8 +39,10 @@ void CharacterRecognition::DetectWord(vector<CharacterContour> &validCharacterCo
             Mat extractedChar;
             
             resize(processedMatrix(textMatrix[iLine][iChar].GetCharRect()), extractedChar, {RESIZED_IMAGE_WIDTH, RESIZED_IMAGE_HEIGHT});
+            extractedChar.convertTo(extractedChar, CV_32FC1);
+            rectangle(originalMatrix, textMatrix[iLine][iChar].GetCharRect(), Scalar(255, 255, 0), 2);
             
-            cout << extractedChar << endl;
+            cout << _kNearest->predict(extractedChar.rreshape(1 , 1)) << endl;
         }
     }
 }
