@@ -27,7 +27,7 @@ class CharacterRecognition {
     
 private:
     
-    Ptr<KNearest> _kNearest;
+    Ptr<SVM> _svm;
   
 public:
     

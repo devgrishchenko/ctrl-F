@@ -11,7 +11,7 @@
 
 CharacterRecognition::CharacterRecognition(const string &modelPath) {
     
-    _kNearest = Algorithm::load<KNearest>(modelPath);
+    _svm = Algorithm::load<SVM>(modelPath);
 }
 
 
@@ -42,7 +42,7 @@ void CharacterRecognition::DetectWord(vector<CharacterContour> &validCharacterCo
             extractedChar.convertTo(extractedChar, CV_32FC1);
             rectangle(originalMatrix, textMatrix[iLine][iChar].GetCharRect(), Scalar(255, 255, 0), 2);
             
-            cout << _kNearest->predict(extractedChar.rreshape(1 , 1)) << endl;
+            cout << _svm->predict(extractedChar.reshape(1 , 1)) << endl;
         }
     }
 }

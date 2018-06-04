@@ -27,7 +27,7 @@ CharacterRecognition *_characterRecognition;
 
 - (string)getModelPath {
     
-    return [[[NSBundle mainBundle] pathForResource:@"knn-ocr" ofType:@"model"] UTF8String];
+    return [[[NSBundle mainBundle] pathForResource:@"svm-ocr" ofType:@"model"] UTF8String];
 }
 
 
