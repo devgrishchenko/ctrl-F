@@ -48,6 +48,20 @@ void CharacterRecognition::DetectWord(vector<CharacterContour> &validCharacterCo
 }
 
 
+void *CharacterRecognition::ParallelLoop(void *threadId) {
+    
+    long start = (long)threadId * 5;
+    long end = start + 5;
+    
+    for (unsigned long i = start; i < end; i++) {
+        
+        //: TODO
+    }
+    
+    pthread_exit(NULL);
+}
+
+
 void CharacterRecognition::Pipeline(Mat &matrix) {
     
     Mat processedMatrix;

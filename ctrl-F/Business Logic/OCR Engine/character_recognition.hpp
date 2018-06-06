@@ -14,6 +14,7 @@
 #include "image_processor.hpp"
 #include "character_contour.hpp"
 #include <stdio.h>
+#include <pthread.h>
 
 #define RESIZED_IMAGE_WIDTH  20
 #define RESIZED_IMAGE_HEIGHT 30
@@ -35,5 +36,6 @@ public:
     void DetectContours(Mat &processedMatrix, vector<vector<cv::Point>> &characterContours);
     void DetectWord(vector<CharacterContour> &validCharacterContours, Mat &originalMatrix, Mat &processedMatrix);
     void Pipeline(Mat &matrix);
+    void *ParallelLoop(void *threadId);
 };
 #endif
