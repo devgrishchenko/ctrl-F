@@ -18,6 +18,7 @@
 
 #define RESIZED_IMAGE_WIDTH  20
 #define RESIZED_IMAGE_HEIGHT 30
+#define NUM_THREADS          5
 
 using namespace std;
 using namespace cv;
@@ -36,6 +37,6 @@ public:
     void DetectContours(Mat &processedMatrix, vector<vector<cv::Point>> &characterContours);
     void DetectWord(vector<CharacterContour> &validCharacterContours, Mat &originalMatrix, Mat &processedMatrix);
     void Pipeline(Mat &matrix);
-    void *ParallelLoop(void *threadId);
+    //void *ParallelLoop(void *threadId);
 };
 #endif
