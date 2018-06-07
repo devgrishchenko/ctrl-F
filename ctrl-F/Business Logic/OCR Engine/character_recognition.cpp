@@ -8,10 +8,22 @@
 
 #include "character_recognition.hpp"
 
+Ptr<SVM> svm;
+static int count_p = NUM_THREADS;
+vector<CharacterContour> contours;
+Mat image;
+Mat processedImage;
+pthread_mutex_t mutexForCount = PTHREAD_MUTEX_INITIALIZER;
+pthread_attr_t attr;
+pthread_t threads[NUM_THREADS];
 
 CharacterRecognition::CharacterRecognition(const string &modelPath) {
     
     _svm = Algorithm::load<SVM>(modelPath);
+    
+    pthread_attr_init(&attr);
+    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+
 }
 
 
@@ -22,25 +34,45 @@ void CharacterRecognition::DetectContours(Mat &processedMatrix, vector<vector<Po
 }
 
 
-int fib(int n)
-{
-    if (n <= 1)
-        return n;
-    return fib(n-1) + fib(n-2);
+void *ParallelLoop(void *threadId) {
+   
+    long start = (long)threadId * (contours.size() / NUM_THREADS);
+    long end = start + contours.size() / NUM_THREADS + ((long)threadId == NUM_THREADS - 1 ? contours.size() % NUM_THREADS : 0) - 1;
+    
+    if (contours.size() > 0 && start > 0 && end > 0 && start != end) {
+        
+        for (unsigned long i = start; i < end; i++) {
+            
+            cout << image.size() << " " << processedImage.size() << " " << contours.size() << " " << start << " " << end << endl;
+            Mat extractedChar;
+
+            resize(processedImage(contours[i].GetCharRect()), extractedChar, {RESIZED_IMAGE_WIDTH, RESIZED_IMAGE_HEIGHT});
+            extractedChar.convertTo(extractedChar, CV_32FC1);
+            rectangle(image, contours[i].GetCharRect(), Scalar(255, 255, 0), 2);
+
+//            svm->predict(extractedChar.reshape(1 , 1));
+
+            extractedChar.release();
+        }
+    }
+
+    return NULL;
 }
 
 
-void *ParallelLoop(void *threadId) {
+void* tFn(void* arg) {
     
-    long start = (long)threadId * 4;
-    long end = start + 4;
-    
-    for (unsigned long i = start; i < end; i++) {
+    pthread_mutex_lock(&mutexForCount);
+    count_p--;
+    if(count_p <= NUM_THREADS) {
         
-        cout << fib(30) << endl;
+        pthread_t temp;
+        pthread_create(&temp,&attr, ParallelLoop, arg);
+        count_p++;
     }
+    pthread_mutex_unlock(&mutexForCount);
     
-    pthread_exit(NULL);
+    return NULL;
 }
 
 
@@ -48,24 +80,39 @@ void CharacterRecognition::DetectWord(vector<CharacterContour> &validCharacterCo
     
     if (validCharacterContours.size() == 0) return;
     
-    vector<vector<CharacterContour>> textMatrix;
+//    vector<vector<CharacterContour>> textMatrix;
     
-//    for (unsigned int i = 0; i < 20; i++) {
+//    cout << validCharacterContours.size() << endl;
+//    for (unsigned int i = 0; i < validCharacterContours.size(); i++) {
 //
-//        cout << fib(30) << endl;
+//        Mat extractedChar;
+//
+//        resize(processedMatrix(validCharacterContours[i].GetCharRect()), extractedChar, {RESIZED_IMAGE_WIDTH, RESIZED_IMAGE_HEIGHT});
+//        extractedChar.convertTo(extractedChar, CV_32FC1);
+//        rectangle(originalMatrix, validCharacterContours[i].GetCharRect(), Scalar(255, 255, 0), 2);
+//
+//        _svm->predict(extractedChar.reshape(1 , 1));
 //    }
     
-    pthread_t threads[NUM_THREADS];
-
+    contours = validCharacterContours;
+    image = originalMatrix;
+    processedImage = processedMatrix;
+    
     for (unsigned long i = 0; i < NUM_THREADS; i++) {
-
-        int rc = pthread_create(&threads[i], NULL, ParallelLoop, (void *)i);
-
+        
+        int rc = pthread_create(&threads[i], NULL, tFn, (void *)i);
+        
         if (rc) {
-
+            
             cout << "Error" << endl;
         }
     }
+    
+    for(int i = 0; i < NUM_THREADS; i++) {
+        
+        pthread_join(threads[i], NULL);
+    }
+    
 //    CharacterContour::SortCharacterContours(validCharacterContours, textMatrix);
     
 //    //: Line in text

@@ -37,6 +37,5 @@ public:
     void DetectContours(Mat &processedMatrix, vector<vector<cv::Point>> &characterContours);
     void DetectWord(vector<CharacterContour> &validCharacterContours, Mat &originalMatrix, Mat &processedMatrix);
     void Pipeline(Mat &matrix);
-    //void *ParallelLoop(void *threadId);
 };
 #endif
