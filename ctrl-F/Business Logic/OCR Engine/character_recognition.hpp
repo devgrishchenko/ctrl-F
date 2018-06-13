@@ -19,7 +19,7 @@
 
 #define RESIZED_IMAGE_WIDTH  20
 #define RESIZED_IMAGE_HEIGHT 30
-#define NUM_THREADS          2
+#define NUM_THREADS          4
 
 using namespace std;
 using namespace cv;
@@ -30,7 +30,10 @@ class CharacterRecognition {
     
 private:
     
-    Ptr<SVM> _svm;
+    static Ptr<SVM> _svm;
+    static vector<CharacterContour> _validCharacterContours;
+    static Mat _image;
+    static Mat _processedImage;
   
 public:
     
