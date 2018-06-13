@@ -24,13 +24,14 @@ private:
     static pthread_t *_threads;
     static int _threadsCount;
     static int _threadsNum;
+    static ThreadsManager *_sharedInstance;
     
     ThreadsManager(const int threadsCount);
 
 public:
     
-    static ThreadsManager *sharedInstance;
-    static ThreadsManager *Instance(const int threadsCount);
+    
+    static ThreadsManager *Instance(const int threadsCount = NULL);
     static void *Manage(void *arg);
     static void *ParallelLoop(void *threadId);
     static function<void(long)> loopBody;

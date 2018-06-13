@@ -14,8 +14,8 @@ pthread_attr_t ThreadsManager::_attr;
 pthread_t *ThreadsManager::_threads;
 int ThreadsManager::_threadsCount;
 int ThreadsManager::_threadsNum;
-ThreadsManager *ThreadsManager::sharedInstance;
 function<void(long)> ThreadsManager::loopBody;
+ThreadsManager *ThreadsManager::_sharedInstance;
 
 
 ThreadsManager::ThreadsManager(const int threadsCount) {
@@ -32,12 +32,12 @@ ThreadsManager::ThreadsManager(const int threadsCount) {
 
 ThreadsManager *ThreadsManager::Instance(const int threadsCount) {
     
-    if (!sharedInstance) {
+    if (!_sharedInstance) {
         
-        sharedInstance = new ThreadsManager(threadsCount);
+        _sharedInstance = new ThreadsManager(threadsCount);
     }
     
-    return sharedInstance;
+    return _sharedInstance;
 }
 
 
@@ -62,6 +62,7 @@ void *ThreadsManager::Manage(void *arg) {
 
 void *ThreadsManager::ParallelLoop(void *threadId) {
     
+    
     loopBody((long)threadId);
     
     return NULL;
@@ -79,4 +80,4 @@ void ThreadsManager::ScheduleThreads() {
         
         pthread_join(_threads[i], NULL);
     }
-    }
+}

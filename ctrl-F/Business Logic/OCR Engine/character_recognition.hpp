@@ -13,12 +13,13 @@
 #include <opencv2/ml/ml.hpp>
 #include "image_processor.hpp"
 #include "character_contour.hpp"
+#include "threads_manager.hpp"
 #include <stdio.h>
 #include <pthread.h>
 
 #define RESIZED_IMAGE_WIDTH  20
 #define RESIZED_IMAGE_HEIGHT 30
-#define NUM_THREADS          5
+#define NUM_THREADS          2
 
 using namespace std;
 using namespace cv;
