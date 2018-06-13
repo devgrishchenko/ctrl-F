@@ -27,7 +27,6 @@
 		951D2DFF20C09E0200D419E9 /* character_recognition.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = character_recognition.cpp; sourceTree = "<group>"; };
 		951D2E0020C09E0200D419E9 /* character_recognition.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = character_recognition.hpp; sourceTree = "<group>"; };
 		9585304B20C9DE7D00AD2A7A /* threads_manager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = threads_manager.cpp; sourceTree = "<group>"; };
-		9585304C20C9DE7D00AD2A7A /* threads_manager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = threads_manager.hpp; sourceTree = "<group>"; };
 		95A73E9420C04F6B0094F1E6 /* character_contour.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = character_contour.cpp; sourceTree = "<group>"; };
 		95A73E9520C04F6B0094F1E6 /* character_contour.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = character_contour.hpp; sourceTree = "<group>"; };
 		95CB1FDF20BC79D500DF58DD /* LiveCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveCamera.swift; sourceTree = "<group>"; };
@@ -90,7 +89,6 @@
 			children = (
 				950CBB8520C5DEFD00A3A3B2 /* svm-ocr.model */,
 				9585304B20C9DE7D00AD2A7A /* threads_manager.cpp */,
-				9585304C20C9DE7D00AD2A7A /* threads_manager.hpp */,
 				951D2DFF20C09E0200D419E9 /* character_recognition.cpp */,
 				951D2E0020C09E0200D419E9 /* character_recognition.hpp */,
 				95CB555220BD97B20099DD3D /* image_processor.cpp */,

@@ -98,20 +98,7 @@ void CharacterRecognition::DetectWord(vector<CharacterContour> &validCharacterCo
     image = originalMatrix;
     processedImage = processedMatrix;
     
-    for (unsigned long i = 0; i < NUM_THREADS; i++) {
-        
-        int rc = pthread_create(&threads[i], NULL, tFn, (void *)i);
-        
-        if (rc) {
-            
-            cout << "Error" << endl;
-        }
-    }
     
-    for(int i = 0; i < NUM_THREADS; i++) {
-        
-        pthread_join(threads[i], NULL);
-    }
     
 //    CharacterContour::SortCharacterContours(validCharacterContours, textMatrix);
     
