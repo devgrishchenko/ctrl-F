@@ -13,13 +13,11 @@
 #include <opencv2/ml/ml.hpp>
 #include "image_processor.hpp"
 #include "character_contour.hpp"
-#include "threads_manager.hpp"
 #include <stdio.h>
 #include <pthread.h>
 
 #define RESIZED_IMAGE_WIDTH  20
 #define RESIZED_IMAGE_HEIGHT 30
-#define NUM_THREADS          4
 
 using namespace std;
 using namespace cv;
@@ -30,10 +28,7 @@ class CharacterRecognition {
     
 private:
     
-    static Ptr<SVM> _svm;
-    static vector<CharacterContour> _validCharacterContours;
-    static Mat _image;
-    static Mat _processedImage;
+    Ptr<SVM> _svm;
   
 public:
     

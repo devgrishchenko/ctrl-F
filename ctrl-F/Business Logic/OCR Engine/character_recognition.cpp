@@ -9,44 +9,9 @@
 #include "character_recognition.hpp"
 
 
-Mat CharacterRecognition::_processedImage;
-Mat CharacterRecognition::_image;
-vector<CharacterContour> CharacterRecognition::_validCharacterContours;
-Ptr<SVM> CharacterRecognition::_svm;
-
-
 CharacterRecognition::CharacterRecognition(const string &modelPath) {
     
     CharacterRecognition::_svm = Algorithm::load<SVM>(modelPath);
-    
-    ThreadsManager::Instance(NUM_THREADS);
-    ThreadsManager::loopBody = [](long threadId) {
-        
-        vector<CharacterContour> temp(_validCharacterContours);
-        Mat processedImage = _processedImage.clone();
-        
-        long start = (long)threadId * (temp.size() / NUM_THREADS);
-        long end = start + temp.size() / NUM_THREADS + ((long)threadId == NUM_THREADS - 1 ? temp.size() % NUM_THREADS : 0) - 1;
-    
-        if (temp.size() > 0 && start > 0 && end > 0 && start != end) {
-    
-            for (unsigned long i = start; i < end; i++) {
-    
-                Mat extractedChar;
-    
-                resize(processedImage(temp[i].GetCharRect()), extractedChar, {RESIZED_IMAGE_WIDTH, RESIZED_IMAGE_HEIGHT});
-                extractedChar.convertTo(extractedChar, CV_32FC1);
-                rectangle(_image, temp[i].GetCharRect(), Scalar(255, 255, 0), 2);
-    
-                cout << char(int(_svm->predict(extractedChar.reshape(1 , 1)))) << endl;
-    
-                extractedChar.release();
-            }
-        }
-        
-        temp.clear();
-        processedImage.release();
-    };
 }
 
 
@@ -63,22 +28,16 @@ void CharacterRecognition::DetectWord(vector<CharacterContour> &validCharacterCo
     
 //    vector<vector<CharacterContour>> textMatrix;
     
-//    cout << validCharacterContours.size() << endl;
-//    for (unsigned int i = 0; i < validCharacterContours.size(); i++) {
-//
-//        Mat extractedChar;
-//
-//        resize(processedMatrix(validCharacterContours[i].GetCharRect()), extractedChar, {RESIZED_IMAGE_WIDTH, RESIZED_IMAGE_HEIGHT});
-//        extractedChar.convertTo(extractedChar, CV_32FC1);
-//        rectangle(originalMatrix, validCharacterContours[i].GetCharRect(), Scalar(255, 255, 0), 2);
-//
-//        _svm->predict(extractedChar.reshape(1 , 1));
-//    }
-    
-    CharacterRecognition::_validCharacterContours = validCharacterContours;
-    CharacterRecognition::_image = originalMatrix;
-    CharacterRecognition::_processedImage = processedMatrix;
-    ThreadsManager::Instance()->ScheduleThreads();
+    for (unsigned int i = 0; i < validCharacterContours.size(); i++) {
+
+        Mat extractedChar;
+
+        resize(processedMatrix(validCharacterContours[i].GetCharRect()), extractedChar, {RESIZED_IMAGE_WIDTH, RESIZED_IMAGE_HEIGHT});
+        extractedChar.convertTo(extractedChar, CV_32FC1);
+        rectangle(originalMatrix, validCharacterContours[i].GetCharRect(), Scalar(255, 255, 0), 2);
+
+        _svm->predict(extractedChar.reshape(1 , 1));
+    }
     
 //    CharacterContour::SortCharacterContours(validCharacterContours, textMatrix);
     
@@ -114,3 +73,31 @@ void CharacterRecognition::Pipeline(Mat &matrix) {
     
     this->DetectWord(validCharacterContours, matrix, processedMatrix);
 }
+
+
+/*
+ vector<CharacterContour> temp(_validCharacterContours);
+ Mat processedImage = _processedImage.clone();
+ 
+ long start = (long)threadId * (temp.size() / NUM_THREADS);
+ long end = start + temp.size() / NUM_THREADS + ((long)threadId == NUM_THREADS - 1 ? temp.size() % NUM_THREADS : 0) - 1;
+ 
+ if (temp.size() > 0 && start > 0 && end > 0 && start != end) {
+ 
+ for (unsigned long i = start; i < end; i++) {
+ 
+ Mat extractedChar;
+ 
+ resize(processedImage(temp[i].GetCharRect()), extractedChar, {RESIZED_IMAGE_WIDTH, RESIZED_IMAGE_HEIGHT});
+ extractedChar.convertTo(extractedChar, CV_32FC1);
+ rectangle(_image, temp[i].GetCharRect(), Scalar(255, 255, 0), 2);
+ 
+ cout << char(int(_svm->predict(extractedChar.reshape(1 , 1)))) << endl;
+ 
+ extractedChar.release();
+ }
+ }
+ 
+ temp.clear();
+ processedImage.release();
+ */
