@@ -25,7 +25,7 @@ vector<Point> CharacterContour::GetCharContour() {
 }
 
 
-Rect CharacterContour::GetCharRect() {
+Rect CharacterContour::GetCharRect() const {
     
     return _charRect;
 }

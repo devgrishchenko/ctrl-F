@@ -31,7 +31,7 @@ public:
     
     CharacterContour(const vector<cv::Point> &charContour);
     vector<cv::Point> GetCharContour();
-    cv::Rect GetCharRect();
+    cv::Rect GetCharRect() const;
     float GetCharArea();
     
     static bool SortYaxis(CharacterContour &left, CharacterContour &right);

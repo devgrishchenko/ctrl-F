@@ -11,7 +11,7 @@
 
 CharacterRecognition::CharacterRecognition(const string &modelPath) {
     
-    _svm = Algorithm::load<SVM>(modelPath);
+    CharacterRecognition::_svm = Algorithm::load<SVM>(modelPath);
 }
 
 
@@ -26,25 +26,13 @@ void CharacterRecognition::DetectWord(vector<CharacterContour> &validCharacterCo
     
     if (validCharacterContours.size() == 0) return;
     
-    vector<vector<CharacterContour>> textMatrix;
+    double time = (double) getTickCount();
+    Parallel parallel(validCharacterContours, originalMatrix, processedMatrix, _svm);
+    parallel_for_(Range(0, (int)validCharacterContours.size()), parallel);
+
     
-    CharacterContour::SortCharacterContours(validCharacterContours, textMatrix);
-    
-    //: Line in text
-    for (int iLine = 0; iLine < textMatrix.size(); iLine++) {
-        
-        //: Each char in line
-        for (int iChar = 0; iChar < textMatrix[iLine].size(); iChar++) {
-            
-            Mat extractedChar;
-            
-            resize(processedMatrix(textMatrix[iLine][iChar].GetCharRect()), extractedChar, {RESIZED_IMAGE_WIDTH, RESIZED_IMAGE_HEIGHT});
-            extractedChar.convertTo(extractedChar, CV_32FC1);
-            rectangle(originalMatrix, textMatrix[iLine][iChar].GetCharRect(), Scalar(255, 255, 0), 2);
-            
-            cout << _svm->predict(extractedChar.reshape(1 , 1)) << endl;
-        }
-    }
+    time = ((double) getTickCount() - time) / getTickFrequency();
+    cout << "Take: " << time << " s" << endl;
 }
 
 
