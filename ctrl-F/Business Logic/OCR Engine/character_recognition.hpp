@@ -13,6 +13,7 @@
 #include <opencv2/ml/ml.hpp>
 #include "image_processor.hpp"
 #include "character_contour.hpp"
+#include "parallel.cpp"
 #include <stdio.h>
 #include <pthread.h>
 

@@ -27,17 +27,23 @@ void CharacterRecognition::DetectWord(vector<CharacterContour> &validCharacterCo
     if (validCharacterContours.size() == 0) return;
     
 //    vector<vector<CharacterContour>> textMatrix;
+    double time = (double) getTickCount();
+    Parallel parallel(validCharacterContours, originalMatrix, processedMatrix, _svm);
+    parallel_for_(Range(0, (int)validCharacterContours.size()), parallel);
     
-    for (unsigned int i = 0; i < validCharacterContours.size(); i++) {
-
-        Mat extractedChar;
-
-        resize(processedMatrix(validCharacterContours[i].GetCharRect()), extractedChar, {RESIZED_IMAGE_WIDTH, RESIZED_IMAGE_HEIGHT});
-        extractedChar.convertTo(extractedChar, CV_32FC1);
-        rectangle(originalMatrix, validCharacterContours[i].GetCharRect(), Scalar(255, 255, 0), 2);
-
-        _svm->predict(extractedChar.reshape(1 , 1));
-    }
+//    for (unsigned int i = 0; i < validCharacterContours.size(); i++) {
+//
+//        Mat extractedChar;
+//
+//        resize(processedMatrix(validCharacterContours[i].GetCharRect()), extractedChar, {RESIZED_IMAGE_WIDTH, RESIZED_IMAGE_HEIGHT});
+//        extractedChar.convertTo(extractedChar, CV_32FC1);
+//        rectangle(originalMatrix, validCharacterContours[i].GetCharRect(), Scalar(255, 255, 0), 2);
+//
+//        _svm->predict(extractedChar.reshape(1 , 1));
+//    }
+    
+    time = ((double) getTickCount() - time) / getTickFrequency();
+    cout << "Take: " << time << " s" << endl;
     
 //    CharacterContour::SortCharacterContours(validCharacterContours, textMatrix);
     
@@ -73,31 +79,3 @@ void CharacterRecognition::Pipeline(Mat &matrix) {
     
     this->DetectWord(validCharacterContours, matrix, processedMatrix);
 }
-
-
-/*
- vector<CharacterContour> temp(_validCharacterContours);
- Mat processedImage = _processedImage.clone();
- 
- long start = (long)threadId * (temp.size() / NUM_THREADS);
- long end = start + temp.size() / NUM_THREADS + ((long)threadId == NUM_THREADS - 1 ? temp.size() % NUM_THREADS : 0) - 1;
- 
- if (temp.size() > 0 && start > 0 && end > 0 && start != end) {
- 
- for (unsigned long i = start; i < end; i++) {
- 
- Mat extractedChar;
- 
- resize(processedImage(temp[i].GetCharRect()), extractedChar, {RESIZED_IMAGE_WIDTH, RESIZED_IMAGE_HEIGHT});
- extractedChar.convertTo(extractedChar, CV_32FC1);
- rectangle(_image, temp[i].GetCharRect(), Scalar(255, 255, 0), 2);
- 
- cout << char(int(_svm->predict(extractedChar.reshape(1 , 1)))) << endl;
- 
- extractedChar.release();
- }
- }
- 
- temp.clear();
- processedImage.release();
- */
