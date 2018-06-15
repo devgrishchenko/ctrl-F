@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		950CBB8620C5DEFD00A3A3B2 /* svm-ocr.model in Resources */ = {isa = PBXBuildFile; fileRef = 950CBB8520C5DEFD00A3A3B2 /* svm-ocr.model */; };
 		951D2E0120C09E0200D419E9 /* character_recognition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 951D2DFF20C09E0200D419E9 /* character_recognition.cpp */; };
 		957BAF2620D20866003F9BB7 /* parallel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 957BAF2520D20866003F9BB7 /* parallel.cpp */; };
 		95A73E9620C04F6B0094F1E6 /* character_contour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 95A73E9420C04F6B0094F1E6 /* character_contour.cpp */; };
@@ -20,10 +19,10 @@
 		95E8822620BC5F890024C147 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95E8822520BC5F890024C147 /* Assets.xcassets */; };
 		95E8822920BC5F890024C147 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95E8822720BC5F890024C147 /* LaunchScreen.storyboard */; };
 		95E8823120BC5FFF0024C147 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E8823020BC5FFF0024C147 /* Extensions.swift */; };
+		95EC9C7220D33EC8003CD670 /* svm-ocr.model in Resources */ = {isa = PBXBuildFile; fileRef = 95EC9C7120D33EC8003CD670 /* svm-ocr.model */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		950CBB8520C5DEFD00A3A3B2 /* svm-ocr.model */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "svm-ocr.model"; sourceTree = "<group>"; };
 		951D2DFF20C09E0200D419E9 /* character_recognition.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = character_recognition.cpp; sourceTree = "<group>"; };
 		951D2E0020C09E0200D419E9 /* character_recognition.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = character_recognition.hpp; sourceTree = "<group>"; };
 		957BAF2520D20866003F9BB7 /* parallel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = parallel.cpp; sourceTree = "<group>"; };
@@ -43,6 +42,7 @@
 		95E8822820BC5F890024C147 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		95E8822A20BC5F890024C147 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		95E8823020BC5FFF0024C147 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		95EC9C7120D33EC8003CD670 /* svm-ocr.model */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "svm-ocr.model"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,7 +87,7 @@
 		95CB555120BD97610099DD3D /* OCR Engine */ = {
 			isa = PBXGroup;
 			children = (
-				950CBB8520C5DEFD00A3A3B2 /* svm-ocr.model */,
+				95EC9C7120D33EC8003CD670 /* svm-ocr.model */,
 				957BAF2520D20866003F9BB7 /* parallel.cpp */,
 				951D2DFF20C09E0200D419E9 /* character_recognition.cpp */,
 				951D2E0020C09E0200D419E9 /* character_recognition.hpp */,
@@ -200,7 +200,7 @@
 			files = (
 				95E8822920BC5F890024C147 /* LaunchScreen.storyboard in Resources */,
 				95E8822620BC5F890024C147 /* Assets.xcassets in Resources */,
-				950CBB8620C5DEFD00A3A3B2 /* svm-ocr.model in Resources */,
+				95EC9C7220D33EC8003CD670 /* svm-ocr.model in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

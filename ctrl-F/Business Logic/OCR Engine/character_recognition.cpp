@@ -11,7 +11,7 @@
 
 CharacterRecognition::CharacterRecognition(const string &modelPath) {
     
-    CharacterRecognition::_svm = Algorithm::load<SVM>(modelPath);
+    _svm = Algorithm::load<SVM>(modelPath);
 }
 
 
@@ -26,13 +26,13 @@ void CharacterRecognition::DetectWord(vector<CharacterContour> &validCharacterCo
     
     if (validCharacterContours.size() == 0) return;
     
-    double time = (double) getTickCount();
-    Parallel parallel(validCharacterContours, originalMatrix, processedMatrix, _svm);
-    parallel_for_(Range(0, (int)validCharacterContours.size()), parallel);
-
+    vector<vector<CharacterContour>> textMatrix;
+    CharacterContour::SortCharacterContours(validCharacterContours, textMatrix);
     
-    time = ((double) getTickCount() - time) / getTickFrequency();
-    cout << "Take: " << time << " s" << endl;
+    Parallel parallel(textMatrix, originalMatrix, processedMatrix, _svm);
+    parallel_for_(Range(0, (int)textMatrix.size()), parallel);
+
+    textMatrix.clear();
 }
 
 
@@ -49,4 +49,6 @@ void CharacterRecognition::Pipeline(Mat &matrix) {
     characterContours.clear();
     
     this->DetectWord(validCharacterContours, matrix, processedMatrix);
+    
+    matrix.release();
 }
