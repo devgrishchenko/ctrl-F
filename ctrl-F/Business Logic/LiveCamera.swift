@@ -31,7 +31,7 @@ public class LiveCamera: NSObject {
     private func configSession() {
         
         self.session = AVCaptureSession()
-        self.session.sessionPreset = .hd1920x1080
+        self.session.sessionPreset = .hd1280x720
         
         //: Device capture. Filters for the front camera
         let deviceCapture = AVCaptureDevice.devices(for: .video)

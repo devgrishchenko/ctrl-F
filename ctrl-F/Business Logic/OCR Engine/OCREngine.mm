@@ -27,7 +27,7 @@ CharacterRecognition *_characterRecognition;
 
 - (string)getModelPath {
     
-    return [[[NSBundle mainBundle] pathForResource:@"svm-ocr" ofType:@"model"] UTF8String];
+    return [[[NSBundle mainBundle] pathForResource:@"knn-ocr" ofType:@"model"] UTF8String];
 }
 
 
@@ -40,6 +40,7 @@ CharacterRecognition *_characterRecognition;
     
     Mat matrix;
     
+    //: Get matrix
     ImageProcessor::Buffer2Mat(matrix, buffer,
                                (int)CVPixelBufferGetBytesPerRow(imageBuffer),
                                (int)CVPixelBufferGetHeight(imageBuffer),
@@ -52,6 +53,7 @@ CharacterRecognition *_characterRecognition;
     
     CVPixelBufferLockBaseAddress(imageBuffer, 0);
     
+    //: Get buffer back
     ImageProcessor::Mat2Buffer(matrix, buffer);
 
     CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
