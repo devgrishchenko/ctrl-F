@@ -22,7 +22,7 @@ void CharacterRecognition::DetectContours(Mat &processedMatrix, vector<vector<Po
 }
 
 
-void CharacterRecognition::DetectWord(vector<CharacterContour> &validCharacterContours, Mat &originalMatrix, Mat &processedMatrix) {
+void CharacterRecognition::DetectWord(vector<CharacterContour> &validCharacterContours, Mat &originalMatrix, Mat &processedMatrix, const string word) {
     
     if (validCharacterContours.size() == 0) return;
     
@@ -30,14 +30,14 @@ void CharacterRecognition::DetectWord(vector<CharacterContour> &validCharacterCo
     CharacterContour::SortCharacterContours(validCharacterContours, textMatrix);
     
     //: Parallel recognition
-    Parallel parallel(textMatrix, originalMatrix, processedMatrix, _knn);
+    Parallel parallel(textMatrix, originalMatrix, processedMatrix, _knn, word);
     parallel_for_(Range(0, (int)textMatrix.size()), parallel);
 
     textMatrix.clear();
 }
 
 
-void CharacterRecognition::Pipeline(Mat &matrix) {
+void CharacterRecognition::Pipeline(Mat &matrix, const string word) {
     
     Mat processedMatrix;
     vector<vector<Point>> characterContours;
@@ -49,7 +49,7 @@ void CharacterRecognition::Pipeline(Mat &matrix) {
     
     characterContours.clear();
     
-    this->DetectWord(validCharacterContours, matrix, processedMatrix);
+    this->DetectWord(validCharacterContours, matrix, processedMatrix, word);
     
     matrix.release();
 }

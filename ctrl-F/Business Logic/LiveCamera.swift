@@ -15,6 +15,7 @@ public class LiveCamera: NSObject {
     private var session: AVCaptureSession!
     private var layer: AVSampleBufferDisplayLayer!
     private var ocrEngine: OCREngine!
+    private var word2search: String!
     
     
     public init(with layerView: UIView) {
@@ -67,6 +68,12 @@ public class LiveCamera: NSObject {
         
         self.session.startRunning()
     }
+    
+    
+    public func setSearch(word word2search: String) {
+        
+        self.word2search = word2search
+    }
 }
 
 
@@ -77,7 +84,11 @@ extension LiveCamera: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureMet
     
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
-        self.ocrEngine.processBuffer(sampleBuffer)
+        if let word = self.word2search, word != "" {
+            
+            self.ocrEngine.processBuffer(sampleBuffer, word)
+        }
+        
         self.layer.enqueue(sampleBuffer)
     }
 }

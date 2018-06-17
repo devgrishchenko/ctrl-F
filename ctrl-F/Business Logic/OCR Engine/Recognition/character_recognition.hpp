@@ -23,7 +23,7 @@ public:
     
     CharacterRecognition(const string &modelPath);
     void DetectContours(Mat &processedMatrix, vector<vector<cv::Point>> &characterContours);
-    void DetectWord(vector<CharacterContour> &validCharacterContours, Mat &originalMatrix, Mat &processedMatrix);
-    void Pipeline(Mat &matrix);
+    void DetectWord(vector<CharacterContour> &validCharacterContours, Mat &originalMatrix, Mat &processedMatrix, const string word);
+    void Pipeline(Mat &matrix, const string word);
 };
 #endif

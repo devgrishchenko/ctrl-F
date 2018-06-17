@@ -12,5 +12,5 @@
 @interface OCREngine : NSObject
 
 - (instancetype)init;
-- (void)processBuffer :(CMSampleBufferRef)sampleBuffer;
+- (void)processBuffer :(CMSampleBufferRef)sampleBuffer :(NSString*)word;
 @end

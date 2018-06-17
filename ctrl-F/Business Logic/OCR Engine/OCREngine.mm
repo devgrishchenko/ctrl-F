@@ -31,7 +31,7 @@ CharacterRecognition *_characterRecognition;
 }
 
 
-- (void)processBuffer :(CMSampleBufferRef)sampleBuffer {
+- (void)processBuffer :(CMSampleBufferRef)sampleBuffer :(NSString*)word {
     
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     CVPixelBufferLockBaseAddress(imageBuffer, 0);
@@ -49,7 +49,7 @@ CharacterRecognition *_characterRecognition;
     CVPixelBufferUnlockBaseAddress(imageBuffer, kCVPixelBufferLock_ReadOnly);
     
     //: Recognition
-    _characterRecognition->Pipeline(matrix);
+    _characterRecognition->Pipeline(matrix, [word UTF8String]);
     
     CVPixelBufferLockBaseAddress(imageBuffer, 0);
     
