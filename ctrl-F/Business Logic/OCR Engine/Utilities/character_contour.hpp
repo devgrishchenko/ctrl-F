@@ -36,7 +36,7 @@ public:
     
     static bool SortYaxis(CharacterContour &left, CharacterContour &right);
     static bool SortXaxis(CharacterContour &left, CharacterContour &right);
-    static void SortCharacterContours(vector<CharacterContour> &characterContours, vector<vector<CharacterContour>> &textMatrix);
-    static void FilterCharacterContours(vector<vector<cv::Point>> &characterContours, vector<CharacterContour> &validCharacterContours);
+    static void SortCharacterContours(vector<CharacterContour> characterContours, vector<vector<CharacterContour>> &textMatrix);
+    static void FilterCharacterContours(vector<vector<cv::Point>> characterContours, vector<CharacterContour> &validCharacterContours);
 };
 #endif

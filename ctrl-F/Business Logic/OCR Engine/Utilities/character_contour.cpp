@@ -51,7 +51,7 @@ bool CharacterContour::SortXaxis(CharacterContour &left, CharacterContour &right
 }
 
 
-void CharacterContour::SortCharacterContours(vector<CharacterContour> &characterContours, vector<vector<CharacterContour>> &textMatrix) {
+void CharacterContour::SortCharacterContours(vector<CharacterContour> characterContours, vector<vector<CharacterContour>> &textMatrix) {
     
     // Sorts contours from top to bottom
     sort(characterContours.begin(), characterContours.end(), CharacterContour::SortYaxis);
@@ -89,13 +89,10 @@ void CharacterContour::SortCharacterContours(vector<CharacterContour> &character
 }
 
 
-void CharacterContour::FilterCharacterContours(vector<vector<Point>> &characterContours, vector<CharacterContour> &validCharacterContours) {
+void CharacterContour::FilterCharacterContours(vector<vector<Point>> characterContours, vector<CharacterContour> &validCharacterContours) {
     
-    for (unsigned int i = 0; i < characterContours.size(); i++) {
+    copy_if(characterContours.begin(), characterContours.end(), back_inserter(validCharacterContours), [](CharacterContour contour) {
         
-        if (contourArea(characterContours[i]) > MIN_CONTOUR_AREA && contourArea(characterContours[i]) < MAX_CONTOUR_AREA) {
-        
-            validCharacterContours.push_back(CharacterContour(characterContours[i]));
-        }
-    }
+        return (contour.GetCharArea() > MIN_CONTOUR_AREA && contour.GetCharArea() < MAX_CONTOUR_AREA);
+    });
 }

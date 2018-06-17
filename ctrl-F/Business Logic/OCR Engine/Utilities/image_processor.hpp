@@ -22,8 +22,8 @@ class ImageProcessor {
     
 public:
     
-    static void ProcessMat(Mat &matrix, Mat &processedMatrix);
-    static void Mat2Buffer(Mat &matrix, unsigned char *buffer);
-    static void Buffer2Mat(Mat &matrix, unsigned char *buffer, const int &bytesPerRow, const int &height, const int &width);
+    static void ProcessMat(Mat matrix, Mat &processedMatrix);
+    static void Mat2Buffer(Mat matrix, unsigned char *buffer);
+    static void Buffer2Mat(Mat &matrix, unsigned char *buffer, const int bytesPerRow, const int height, const int width);
 };
 #endif

@@ -27,12 +27,12 @@ private:
     vector<vector<CharacterContour>> _textMatrix;
     Mat &_originalMatrix;
     Mat _processedMatrix;
-    string _word;
+    string _word2search;
     
 public:
     
-    Parallel(const vector<vector<CharacterContour>> textMatrix, Mat &originalMatrix, const Mat processedMatrix, const Ptr<KNearest> knn, const string word)
-    : _textMatrix(textMatrix), _originalMatrix(originalMatrix), _processedMatrix(processedMatrix), _knn(knn), _word(word) {};
+    Parallel(const vector<vector<CharacterContour>> textMatrix, Mat &originalMatrix, const Mat processedMatrix, const Ptr<KNearest> knn, const string word2search)
+    : _textMatrix(textMatrix), _originalMatrix(originalMatrix), _processedMatrix(processedMatrix), _knn(knn), _word2search(word2search) {};
     
     virtual void operator ()(const Range& range) const {
         
@@ -53,21 +53,23 @@ public:
     
                 //: Predicting
                 line += tolower(char(int(_knn->predict(extractedChar.reshape(1 , 1)))));
+                
+                extractedChar.release();
             }
             
             //: Search for the desired word in the line
-            size_t pos = line.find(_word, 0);
-
+            size_t pos = line.find(_word2search, 0);
+                
             while(pos != string::npos) {
                 
                 positions.push_back(pos);
-                pos = line.find(_word, pos + 1);
+                pos = line.find(_word2search, pos + 1);
             }
 
             //: Draw the contour around the matched word
             for (size_t p = 0; p < positions.size(); p++) {
 
-                size_t lastIndex = positions[p] + _word.length() - 1;
+                size_t lastIndex = positions[p] + _word2search.length() - 1;
                 
                 rectangle(_originalMatrix,
                           cv::Rect(_textMatrix[i][positions[p]].GetCharRect().x,

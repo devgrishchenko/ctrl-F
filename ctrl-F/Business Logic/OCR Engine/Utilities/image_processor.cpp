@@ -9,19 +9,19 @@
 #include "image_processor.hpp"
 
 
-void ImageProcessor::Mat2Buffer(Mat &matrix, unsigned char *buffer) {
+void ImageProcessor::Mat2Buffer(Mat matrix, unsigned char *buffer) {
     
     buffer = matrix.data;
 }
 
 
-void ImageProcessor::Buffer2Mat(Mat &matrix, unsigned char *buffer, const int &bytesPerRow, const int &height, const int &width) {
+void ImageProcessor::Buffer2Mat(Mat &matrix, unsigned char *buffer, const int bytesPerRow, const int height, const int width) {
     
     matrix = Mat(height, width, CV_8UC4, buffer, bytesPerRow);
 }
 
 
-void ImageProcessor::ProcessMat(Mat &matrix, Mat &processedMatrix) {
+void ImageProcessor::ProcessMat(Mat matrix, Mat &processedMatrix) {
     
     //: Converts image to the grayscale
     cvtColor(matrix, processedMatrix, CV_BGR2GRAY);
