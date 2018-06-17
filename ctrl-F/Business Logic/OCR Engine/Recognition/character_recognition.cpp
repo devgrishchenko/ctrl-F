@@ -44,12 +44,12 @@ void CharacterRecognition::Pipeline(Mat &matrix, const string word) {
     vector<CharacterContour> validCharacterContours;
     
     ImageProcessor::ProcessMat(matrix, processedMatrix);
-    this->DetectContours(processedMatrix, characterContours);
-    CharacterContour::FilterCharacterContours(characterContours, validCharacterContours);
     
-    characterContours.clear();
+    this->DetectContours(processedMatrix, characterContours);
+    
+    CharacterContour::FilterCharacterContours(characterContours, validCharacterContours);
     
     this->DetectWord(validCharacterContours, matrix, processedMatrix, word);
     
-    matrix.release();
+    processedMatrix.release();
 }
